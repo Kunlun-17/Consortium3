@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Thousand Faces: Consortium Commission</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..700&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   DESIGN C · "THOUSAND VOICES" (bento)
+   Theme tokens: change fonts + colours here to re-theme any page
+   ========================================================= */
+:root{
+  --font-display:'Bricolage Grotesque', system-ui, sans-serif;  /* headings + UI */
+  --font-body:'Newsreader', Georgia, serif;                       /* reading text */
+
+  --bg:#0A0E12; --card:#11171D; --card-2:#161E26;
+  --stroke:rgba(237,234,226,.08); --stroke-2:rgba(237,234,226,.16);
+  --ink:#EDEAE2; --muted:#9DA6AE;
+  --accent:#7FD6C4; --accent-ink:#0B1014;
+  --gold:#E6B866;                     /* used once, sparingly */
+  --paper:#F3F1EA; --paper-ink:#161A1F; --deep:#0F6E60;
+
+  --r:22px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+::selection{background:var(--accent);color:var(--accent-ink)}
+.wrap{max-width:1280px;margin:0 auto;padding:0 32px}
+.ui{font-family:var(--font-display)}
+.chip{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 12px;border-radius:999px;border:1px solid var(--stroke-2);font-family:var(--font-display);font-size:13px;font-weight:500;letter-spacing:.02em;color:var(--accent);background:rgba(127,214,196,.05)}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(127,214,196,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(127,214,196,0)}100%{box-shadow:0 0 0 0 rgba(127,214,196,0)}}
+h2.h{margin:18px 0 0;font-family:var(--font-display);font-weight:400;font-size:clamp(36px,4.2vw,58px);line-height:1.02;letter-spacing:-.035em}
+
+/* ---------- fixed top marks ---------- */
+.top{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:22px 32px;pointer-events:none}
+.top a{pointer-events:auto;text-decoration:none}
+.brand{font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.brand svg{width:22px;height:22px}
+.top .cta{font-family:var(--font-display);font-size:14px;font-weight:500;padding:10px 18px;border-radius:999px;background:rgba(17,23,29,.7);border:1px solid var(--stroke-2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .3s,color .3s}
+.top .cta:hover{background:var(--accent);color:var(--accent-ink)}
+
+/* ---------- floating dock nav ---------- */
+.dock{position:fixed;left:50%;bottom:22px;z-index:70;transform:translateX(-50%);display:flex;gap:2px;padding:6px;border-radius:999px;background:rgba(17,23,29,.72);border:1px solid var(--stroke-2);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.dock a{position:relative;z-index:1;padding:10px 18px;border-radius:999px;font-family:var(--font-display);font-size:14px;font-weight:500;text-decoration:none;color:var(--muted);white-space:nowrap;transition:color .35s}
+.dock a:hover{color:var(--ink)}
+.dock a.active{color:var(--accent-ink)}
+.dock .ind{position:absolute;left:0;top:6px;height:calc(100% - 12px);border-radius:999px;background:var(--accent);opacity:0;transition:transform .6s var(--ease),width .6s var(--ease),opacity .3s}
+
+/* ---------- hero: dot field + scramble ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;padding:120px 0 120px}
+#field{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,var(--bg));pointer-events:none}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.55fr 1fr;gap:56px;align-items:end;width:100%}
+.hero h1{margin:26px 0 0;font-family:var(--font-display);font-weight:300;font-size:clamp(54px,8.6vw,150px);line-height:.9;letter-spacing:-.055em}
+.hero h1 span{display:block;white-space:nowrap}
+.hero h1 .b{display:block;font-weight:600;color:var(--accent)}
+.hero-side .lede{margin:0;font-family:var(--font-body);font-size:clamp(22px,2vw,27px);line-height:1.38;font-weight:400}
+.hero-side .sub{margin:16px 0 0;color:var(--muted);font-size:18px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:14px;font-family:var(--font-display);font-size:15px;font-weight:500;text-decoration:none;transition:transform .4s var(--ease),background .3s,border-color .3s}
+.btn:hover{transform:translateY(-2px)}
+.btn-a{background:var(--accent);color:var(--accent-ink)}
+.btn-b{border:1px solid var(--stroke-2);background:rgba(255,255,255,.02)}
+.btn-b:hover{border-color:var(--accent)}
+.btn svg{width:16px;height:16px}
+
+/* ---------- bento + cards ---------- */
+.sec{padding:90px 0}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.card{position:relative;border-radius:var(--r);background:var(--card);border:1px solid var(--stroke);padding:34px;overflow:hidden;isolation:isolate}
+.spot::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(127,214,196,.11),transparent 42%);opacity:0;transition:opacity .4s}
+.spot:hover::before{opacity:1}
+.spot::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(127,214,196,.55),transparent 45%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;pointer-events:none}
+.spot:hover::after{opacity:1}
+.tilt{transform-style:preserve-3d;transition:transform .5s var(--ease)}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s12{grid-column:span 12}
+
+.pop{opacity:0;transform:translateY(26px) scale(.975);filter:blur(8px);transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:calc(var(--i,0) * 70ms)}
+.pop.in{opacity:1;transform:none;filter:none}
+
+/* stats */
+.stat b{display:block;font-family:var(--font-display);font-weight:500;font-size:clamp(28px,2.6vw,38px);letter-spacing:-.03em;line-height:1.05}
+.stat span{display:block;margin-top:10px;font-style:italic;color:var(--muted);font-size:17px}
+.stat .ix{position:absolute;top:22px;right:24px;font-family:var(--font-display);font-size:12px;color:var(--muted)}
+.stat.gold b{color:var(--gold)}
+
+/* work */
+.q{background:var(--accent);color:var(--accent-ink);border-color:transparent;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.q .mark{font-family:var(--font-display);font-size:90px;line-height:.6;font-weight:600;opacity:.25}
+.q p{margin:0;font-family:var(--font-body);font-style:italic;font-size:clamp(26px,2.6vw,36px);line-height:1.2}
+.cols{columns:3;column-gap:44px}
+.cols p{margin:0 0 20px;break-inside:avoid;font-size:18px;line-height:1.7;color:#D5D9DC}
+
+/* moves */
+.move{min-height:330px;display:flex;flex-direction:column;justify-content:space-between}
+.move .ico{width:66px;height:66px}
+.move .ico *{fill:none;stroke:var(--accent);stroke-width:1.4}
+.move h3{margin:28px 0 0;font-family:var(--font-display);font-weight:500;font-size:30px;letter-spacing:-.03em;line-height:1.1}
+.move p{margin:10px 0 0;color:var(--muted);font-size:18px}
+.move .n{position:absolute;top:26px;right:30px;font-family:var(--font-display);font-size:13px;color:var(--muted)}
+.spiral{stroke-dasharray:4 6;animation:dash 8s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-120}}
+.orbit{transform-origin:33px 33px;animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.fork-a{stroke-dasharray:60;stroke-dashoffset:60;animation:draw 3.6s var(--ease) infinite}
+@keyframes draw{40%,70%{stroke-dashoffset:0}100%{stroke-dashoffset:-60}}
+
+/* programming: expanding panels */
+.prog-head{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end}
+.prog-head p{margin:0;color:var(--muted)}
+.panels{display:flex;gap:14px;height:400px;margin-top:48px}
+.pn{flex:1;min-width:0;border-radius:var(--r);border:1px solid var(--stroke);padding:30px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative;transition:flex .8s var(--ease),border-color .4s;cursor:default;outline:none}
+.pn:nth-child(1){background:radial-gradient(120% 90% at 0% 100%,rgba(127,214,196,.16),transparent 55%),var(--card)}
+.pn:nth-child(2){background:radial-gradient(120% 90% at 100% 100%,rgba(15,110,96,.32),transparent 55%),var(--card)}
+.pn:nth-child(3){background:radial-gradient(120% 90% at 50% 120%,rgba(169,185,240,.14),transparent 55%),var(--card)}
+.pn:hover,.pn:focus-visible{flex:2.2;border-color:var(--stroke-2)}
+.pn .ix{font-family:var(--font-display);font-size:13px;color:var(--muted)}
+.pn .t{font-family:var(--font-display);font-weight:400;font-size:clamp(26px,2.6vw,40px);line-height:1.05;letter-spacing:-.03em}
+.pn .t em{font-family:var(--font-body);font-weight:400}
+.pn small{display:block;margin-top:12px;font-size:17px;font-style:italic;color:var(--muted)}
+.pn .glyph{position:absolute;right:-10px;top:-30px;font-family:var(--font-display);font-weight:700;font-size:240px;line-height:1;letter-spacing:-.06em;color:rgba(237,234,226,.035);transition:transform .9s var(--ease)}
+.pn:hover .glyph{transform:translateX(-30px)}
+.prog-note{margin:22px 0 0;font-size:16px;color:var(--muted);max-width:760px}
+
+/* artists: segmented tabs */
+.seg{position:relative;display:inline-flex;padding:5px;border-radius:999px;background:var(--card);border:1px solid var(--stroke);margin-top:40px}
+.seg button{position:relative;z-index:1;border:0;background:none;color:var(--muted);padding:12px 22px;border-radius:999px;font-family:var(--font-display);font-size:15px;font-weight:500;cursor:pointer;transition:color .4s}
+.seg button[aria-selected="true"]{color:var(--paper-ink)}
+.seg .pill{position:absolute;top:5px;left:0;height:calc(100% - 10px);border-radius:999px;background:var(--paper);transition:transform .6s var(--ease),width .6s var(--ease)}
+.stage{display:grid;margin-top:22px}
+.pane{grid-area:1/1;display:grid;grid-template-columns:5fr 7fr;gap:14px;opacity:0;visibility:hidden;transform:translateY(16px);filter:blur(10px);transition:opacity .6s var(--ease),transform .6s var(--ease),filter .6s var(--ease),visibility 0s .6s}
+.pane.on{opacity:1;visibility:visible;transform:none;filter:none;transition-delay:0s}
+.ph{border-radius:var(--r);border:1.5px dashed #5A646D;min-height:460px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--muted);font-family:var(--font-display);font-size:15px;background:var(--card)}
+.bio{border-radius:var(--r);background:var(--paper);color:var(--paper-ink);padding:44px}
+.bio h3{margin:0;font-family:var(--font-display);font-weight:500;font-size:clamp(30px,3vw,42px);letter-spacing:-.035em;line-height:1.05}
+.bio h3 span{font-weight:300;color:#4A525A}
+.bio p{margin:18px 0 0;font-size:18px;line-height:1.68}
+.bio a{display:inline-flex;align-items:center;gap:8px;margin-top:24px;font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--deep);text-decoration:none;padding:10px 16px;border-radius:999px;border:1px solid rgba(15,110,96,.3);transition:background .3s,color .3s}
+.bio a:hover{background:var(--deep);color:var(--paper)}
+
+/* consortium */
+.cons-lead{display:flex;flex-direction:column;justify-content:space-between;grid-row:span 2;background:linear-gradient(160deg,#13332F,var(--card) 60%)}
+.cons-lead p{margin:26px 0 0;color:#C9D0D4}
+.benefit .ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(127,214,196,.08);border:1px solid rgba(127,214,196,.2)}
+.benefit .ico svg{width:20px;height:20px;fill:none;stroke:var(--accent);stroke-width:1.5}
+.benefit h3{margin:22px 0 0;font-family:var(--font-display);font-weight:500;font-size:22px;letter-spacing:-.02em;line-height:1.2}
+.benefit p{margin:8px 0 0;color:var(--muted);font-size:17px}
+.note-card{padding:22px 34px;color:var(--muted);font-size:16px;font-style:italic}
+
+/* contact: rotating gradient border */
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+.contact-card{position:relative;border-radius:30px;padding:2px;background:conic-gradient(from var(--ang),transparent 0 55%,var(--accent) 70%,#A9B9F0 80%,transparent 92%);animation:rot 6s linear infinite}
+@keyframes rot{to{--ang:360deg}}
+.contact-in{border-radius:28px;background:var(--card);padding:64px;display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:center}
+.contact-in h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(40px,5vw,72px);line-height:.98;letter-spacing:-.045em}
+.contact-in > div > p{margin:22px 0 0;color:var(--muted);max-width:520px}
+.req{border-radius:var(--r);background:var(--card-2);border:1px solid var(--stroke);padding:30px}
+.req .lbl{font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.req .who{margin-top:16px;font-family:var(--font-display);font-size:22px;line-height:1.45;letter-spacing:-.01em}
+.req .ag{margin-top:6px;color:var(--muted);font-size:16px}
+
+footer{padding:40px 0 120px;color:var(--muted);font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--stroke);padding-top:28px}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .wrap{padding:0 18px}
+  .top{padding:16px 18px}
+  .top .cta{display:none}
+  .dock{left:12px;right:12px;transform:none;overflow-x:auto;scrollbar-width:none;bottom:14px}
+  .dock::-webkit-scrollbar{display:none}
+  .dock a{padding:9px 14px;font-size:13px}
+  .hero{padding:110px 0 90px}
+  .hero-grid,.prog-head,.contact-in{grid-template-columns:1fr;gap:32px}
+  .s3,.s4,.s5,.s6,.s7{grid-column:span 12}
+  .stats .s3{grid-column:span 6}
+  .cons-lead{grid-row:auto}
+  .benefits-wrap .s3{grid-column:span 6}
+  .cols{columns:1}
+  .panels{flex-direction:column;height:auto}
+  .pn{min-height:190px}
+  .pn:hover,.pn:focus-visible{flex:1}
+  .pane{grid-template-columns:1fr}
+  .ph{min-height:300px}
+  .bio{padding:30px 24px}
+  .card{padding:26px}
+  .contact-in{padding:36px 24px}
+  .sec{padding:64px 0}
+}
+@media (max-width:560px){
+  .stats .s3,.benefits-wrap .s3{grid-column:span 12}
+  .seg button{padding:11px 14px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .pop{opacity:1;transform:none;filter:none}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a class="brand" href="#top" aria-label="A Thousand Faces, back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#7FD6C4" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    A Thousand Faces
+  </a>
+  <a class="cta" href="#inquire">Join the consortium</a>
+</div>
+
+<nav class="dock" aria-label="Page sections">
+  <span class="ind" aria-hidden="true"></span>
+  <a href="#work" data-sec="work">The work</a>
+  <a href="#programming" data-sec="programming">Programming</a>
+  <a href="#artists" data-sec="artists">The artists</a>
+  <a href="#consortium" data-sec="consortium">The consortium</a>
+  <a href="#inquire" data-sec="inquire">Inquire</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<header class="hero" id="top">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="chip"><i></i><span data-scr>A consortium commission · Premiere window June 2027</span></span>
+      <h1 aria-label="A Thousand Faces"><span aria-hidden="true" data-scr>A Thousand</span><span class="b" aria-hidden="true" data-scr>Faces</span></h1>
+    </div>
+    <div class="hero-side">
+      <p class="lede pop" style="--i:4">A concerto for amplified cello and orchestra by Ellis Ludwig-Leone, written for Sæunn Thorsteinsdóttir.</p>
+      <p class="sub pop" style="--i:5">The hero’s journey, retold for a world of echo chambers. We are inviting 5 to 7 chamber orchestras and festivals to commission it together.</p>
+      <div class="btns pop" style="--i:6">
+        <a class="btn btn-a" href="#inquire">Join the consortium <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <a class="btn btn-b" href="#work">Read about the work</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<section class="wrap" aria-label="At a glance">
+  <div class="bento stats">
+    <div class="card spot stat s3 pop" style="--i:0"><span class="ix">01</span><b>20–25 min</b><span>One concerto, one half</span></div>
+    <div class="card spot stat s3 pop" style="--i:1"><span class="ix">02</span><b>Amplified cello</b><span>With orchestra, chamber scoring available</span></div>
+    <div class="card spot stat gold s3 pop" style="--i:2"><span class="ix">03</span><b>June 2027</b><span>Premiere window</span></div>
+    <div class="card spot stat s3 pop" style="--i:3"><span class="ix">04</span><b>5–7 partners</b><span>Chamber orchestras and festivals</span></div>
+  </div>
+</section>
+
+<!-- THE WORK -->
+<section class="sec" id="work">
+  <div class="wrap bento">
+    <div class="card spot s7 pop">
+      <span class="chip"><i></i><span data-scr>The work</span></span>
+      <h2 class="h">The hero’s journey, with the question it usually skips</h2>
+    </div>
+    <div class="card q s5 pop" style="--i:1">
+      <span class="mark" aria-hidden="true">“</span>
+      <p>Who gets to undertake this journey, and what counts as success?</p>
+    </div>
+    <div class="card s12 pop" style="--i:2">
+      <div class="cols">
+        <p>The concerto is made for the hero’s journey. The soloist is the hero, with a struggle and, eventually, a triumph. The orchestra stands in for society, nature, or any obstacle on the way. What the story rarely asks is who gets to be the hero, and whether one person remaking the world in their own image is worth celebrating at all.</p>
+        <p><em>A Thousand Faces</em> takes up an ancient story in a contemporary setting. Like Orpheus, Dante, or Inanna, the cellist descends further into a mythological underworld with each movement, searching for truth. This underworld looks a lot like ours: hyperconnected but disjointed, full of opinionated and easily influenced voices, open to charismatic leaders and seductive lies.</p>
+        <p>Her way through is to reject traditional ideas of success, walking away from power and influence just as they come within reach. That refusal opens a real hero’s journey toward a new reality rooted in self-knowledge, generosity of spirit, and collective action.</p>
+      </div>
+    </div>
+
+    <!-- THREE MOVES -->
+    <article class="card spot tilt move s4 pop" style="--i:0">
+      <span class="n">01</span>
+      <svg class="ico" viewBox="0 0 66 66" aria-hidden="true"><circle cx="33" cy="33" r="30"/><circle cx="33" cy="38" r="21"/><circle cx="33" cy="43" r="12"/><path class="spiral" d="M33 3v57"/></svg>
+      <div><h3>The descent</h3><p>Each movement takes the cellist deeper into a distorted echo chamber of voices, influence, and persuasion.</p></div>
+    </article>
+    <article class="card spot tilt move s4 pop" style="--i:1">
+      <span class="n">02</span>
+      <svg class="ico" viewBox="0 0 66 66" aria-hidden="true"><path d="M33 62V34"/><path d="M33 34 12 8"/><path class="fork-a" d="M33 34 54 8"/><circle cx="12" cy="8" r="3"/><circle cx="54" cy="8" r="3"/></svg>
+      <div><h3>The refusal</h3><p>When power and influence are closest, she walks away from them. That is the turn the whole piece is built around.</p></div>
+    </article>
+    <article class="card spot tilt move s4 pop" style="--i:2">
+      <span class="n">03</span>
+      <svg class="ico" viewBox="0 0 66 66" aria-hidden="true"><circle cx="33" cy="33" r="9"/><g class="orbit"><circle cx="33" cy="6" r="3"/><circle cx="56.4" cy="19.5" r="3"/><circle cx="56.4" cy="46.5" r="3"/><circle cx="33" cy="60" r="3"/><circle cx="9.6" cy="46.5" r="3"/><circle cx="9.6" cy="19.5" r="3"/></g></svg>
+      <div><h3>A new reality</h3><p>Self-knowledge, generosity of spirit, and collective action: a different answer to what a hero is for.</p></div>
+    </article>
+  </div>
+</section>
+
+<!-- PROGRAMMING -->
+<section class="sec" id="programming">
+  <div class="wrap">
+    <div class="prog-head">
+      <div class="pop">
+        <span class="chip"><i></i><span data-scr>Programming</span></span>
+        <h2 class="h">Built to stand beside the great hero stories</h2>
+      </div>
+      <p class="pop" style="--i:1">Set next to works from the past, the new concerto lets an audience hear the arc of the journey stay the same while the hero, and the journey itself, change with the times.</p>
+    </div>
+    <div class="panels">
+      <div class="pn pop" tabindex="0" style="--i:0"><span class="ix">01</span><span class="glyph" aria-hidden="true">E</span><div class="t">Beethoven, <em>Eroica</em> Symphony</div></div>
+      <div class="pn pop" tabindex="0" style="--i:1"><span class="ix">02</span><span class="glyph" aria-hidden="true">H</span><div class="t">Strauss, <em>Ein Heldenleben</em></div></div>
+      <div class="pn pop" tabindex="0" style="--i:2"><span class="ix">03</span><span class="glyph" aria-hidden="true">∞</span><div class="t">And countless others<small>Any program built around the hero’s arc</small></div></div>
+    </div>
+    <p class="prog-note pop">The concerto is scored for amplified cello and orchestra and is designed to work with reduced or chamber-sized forces. Scoring and amplification details are available on request.</p>
+  </div>
+</section>
+
+<!-- ARTISTS -->
+<section class="sec" id="artists">
+  <div class="wrap">
+    <div class="pop">
+      <span class="chip"><i></i><span data-scr>The artists</span></span>
+      <h2 class="h" style="max-width:820px">A composer of wonder and dread, a cellist who commissions the new</h2>
+    </div>
+    <div class="seg pop" role="tablist" aria-label="Choose an artist">
+      <span class="pill" aria-hidden="true"></span>
+      <button role="tab" id="tab-ellis" aria-controls="pane-ellis" aria-selected="true">Ellis Ludwig-Leone</button>
+      <button role="tab" id="tab-saeunn" aria-controls="pane-saeunn" aria-selected="false" tabindex="-1">Sæunn Thorsteinsdóttir</button>
+    </div>
+    <div class="stage">
+      <div class="pane on" id="pane-ellis" role="tabpanel" aria-labelledby="tab-ellis">
+        <div class="ph">[PHOTO: Ellis Ludwig-Leone]</div>
+        <div class="bio">
+          <h3>Ellis Ludwig-Leone, <span>composer</span></h3>
+          <p>Ludwig-Leone writes music that joins warm, naturalistic textures with moments of thorny complexity, and pays special attention to the place where wonder and dread meet. The New Yorker praised his “knack for simultaneously expressing beauty and crisis.”</p>
+          <p>He first reached international audiences as the creative force behind San Fermin, and has since written widely for concert hall and stage. His music has been performed by the Philadelphia Orchestra, the BBC Concert Orchestra, and New York City Ballet. <em>North Woods</em>, a 20-minute orchestral work, was commissioned for the Bangor Symphony Orchestra. His dance-driven opera <em>The Night Falls</em> was named one of The New York Times’ Best Dance Performances of 2023.</p>
+          <p>He received the Ellis-Beauregard Composer Award in 2024 and co-founded Better Company Records in Brooklyn.</p>
+          <a href="https://www.ellisludwigleone.com/">ellisludwigleone.com <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="pane" id="pane-saeunn" role="tabpanel" aria-labelledby="tab-saeunn">
+        <div class="ph">[PHOTO: Sæunn Thorsteinsdóttir]</div>
+        <div class="bio">
+          <h3>Sæunn Thorsteinsdóttir, <span>cello</span></h3>
+          <p>Born in Reykjavík, Sæunn is a fearless explorer of sound who weaves together tradition and innovation. The Los Angeles Times noted her “emotional intensity.” She has appeared as soloist with the Los Angeles Philharmonic, NDR Elbphilharmonie Orchester, BBC Symphony Orchestra, Seattle Symphony, Toronto Symphony Orchestra, and Iceland Symphony, and at venues including Carnegie Hall, the Barbican Centre, and Disney Hall.</p>
+          <p>A passionate advocate for new music, she has premiered concertos by Veronique Vaka and Halldór Smárason, whose <em>Nú</em> gives the soloist an entirely improvised part. <em>Quake</em>, the concerto Páll Ragnar Pálsson wrote for her, was nominated for a 2021 Grammy. Her recording of the Bach solo suites, <em>Marrow</em>, has drawn international praise.</p>
+          <p>An Ensemble Connect alum, she brings classical music into communities and schools, and is Artistic Director NYC of the Tertulia concert series.</p>
+          <a href="http://www.saeunn.com">saeunn.com <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSORTIUM -->
+<section class="sec" id="consortium">
+  <div class="wrap bento benefits-wrap">
+    <div class="card cons-lead s6 pop">
+      <div>
+        <span class="chip"><i></i><span data-scr>The consortium</span></span>
+        <h2 class="h">Commission it together</h2>
+      </div>
+      <p>Five to seven chamber orchestras and festivals each take a share of the commission. Every partner gets a place in the work’s first chapter and a distinctive new concerto for its own audience, at a fraction of the cost of commissioning alone.</p>
+    </div>
+    <div class="card spot benefit s3 pop" style="--i:1">
+      <span class="ico"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></span>
+      <h3>Performance with Sæunn</h3><p>A place on the performance schedule for the new concerto, with the cellist it was written for.</p>
+    </div>
+    <div class="card spot benefit s3 pop" style="--i:2">
+      <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5"/></svg></span>
+      <h3>Commissioning credit</h3><p>Your name in the score, programs, and press materials for the work.</p>
+    </div>
+    <div class="card spot benefit s3 pop" style="--i:3">
+      <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <h3>Early access</h3><p>Advance look at the score and materials to plan programming and rehearsal.</p>
+    </div>
+    <div class="card spot benefit s3 pop" style="--i:4">
+      <span class="ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M3 19c0-3 2.5-5 5-5s5 2 5 5M11 19c0-3 2.5-5 5-5s5 2 5 5"/></svg></span>
+      <h3>Artist engagement</h3><p>Opportunities to connect Ellis and Sæunn with your community through talks, education, and outreach.</p>
+    </div>
+    <div class="card note-card s12 pop">Participation levels, fees, and the full timeline are in the consortium prospectus, which we share on request.</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="inquire">
+  <div class="wrap">
+    <div class="contact-card pop">
+      <div class="contact-in">
+        <div>
+          <h2>Join us for the first chapter</h2>
+          <p>Tell us a little about your orchestra or festival and we’ll send the prospectus, with participation levels and the timeline toward a June 2027 premiere.</p>
+        </div>
+        <div class="req">
+          <div class="lbl">Request the prospectus</div>
+          <div class="who">[CONTACT NAME]<br>[CONTACT EMAIL]</div>
+          <div class="ag">[AGENCY NAME]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><em>A Thousand Faces</em>: Concerto for Cello and Orchestra</div>
+    <div>Ellis Ludwig-Leone · Sæunn Thorsteinsdóttir</div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+  const css = getComputedStyle(root);
+  const toRgb = h => { h = h.trim().replace('#',''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); const n = parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; };
+  const A = toRgb(css.getPropertyValue('--accent') || '#7FD6C4'), I = toRgb(css.getPropertyValue('--ink') || '#EDEAE2');
+
+  /* text scramble */
+  const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz·/—';
+  function scramble(el, dur = 1300) {
+    const final = el.dataset.text || el.textContent; el.dataset.text = final;
+    if (reduce) { el.textContent = final; return; }
+    const t0 = performance.now(), n = final.length;
+    (function f(t) {
+      const p = Math.min(1, (t - t0) / dur); let out = '';
+      for (let i = 0; i < n; i++) {
+        const c = final[i];
+        out += (c === ' ' || p >= .12 + .8 * (i / n)) ? c : glyphs[(Math.random() * glyphs.length) | 0];
+      }
+      el.textContent = out;
+      if (p < 1) requestAnimationFrame(f);
+    })(t0);
+  }
+  document.querySelectorAll('.hero [data-scr]').forEach((el, i) => setTimeout(() => scramble(el, 1200 + i * 250), 150 + i * 120));
+
+  /* reveals (+ scramble chips on entry) */
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('[data-scr]').forEach(s => scramble(s, 900));
+    io.unobserve(e.target);
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.pop').forEach(el => {
+    if (el.closest('.hero')) setTimeout(() => el.classList.add('in'), 500 + (parseInt(getComputedStyle(el).getPropertyValue('--i')) || 0) * 40);
+    else io.observe(el);
+  });
+
+  /* spotlight + tilt */
+  document.querySelectorAll('.spot').forEach(c => c.addEventListener('pointermove', e => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }));
+  if (fine && !reduce) document.querySelectorAll('.tilt').forEach(c => {
+    c.addEventListener('pointermove', e => {
+      const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      c.style.transform = `perspective(900px) rotateX(${-y * 7}deg) rotateY(${x * 9}deg) translateY(-4px)`;
+    });
+    c.addEventListener('pointerleave', () => { c.style.transform = ''; });
+  });
+
+  /* dock active indicator */
+  const dock = document.querySelector('.dock'), ind = dock.querySelector('.ind'), links = [...dock.querySelectorAll('a')];
+  const setActive = id => {
+    links.forEach(a => a.classList.toggle('active', a.dataset.sec === id));
+    const a = links.find(l => l.dataset.sec === id);
+    if (!a) { ind.style.opacity = 0; return; }
+    ind.style.width = a.offsetWidth + 'px'; ind.style.transform = `translateX(${a.offsetLeft}px)`; ind.style.opacity = 1;
+    if (dock.scrollWidth > dock.clientWidth) dock.scrollTo({ left: a.offsetLeft - 40, behavior: 'smooth' });
+  };
+  const secIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setActive(e.target.id); }), { rootMargin: '-45% 0px -50% 0px' });
+  ['top','work','programming','artists','consortium','inquire'].forEach(id => secIO.observe(document.getElementById(id)));
+  addEventListener('resize', () => { const a = dock.querySelector('a.active'); if (a) setActive(a.dataset.sec); });
+
+  /* artist tabs */
+  const seg = document.querySelector('.seg'), pill = seg.querySelector('.pill'), tabs = [...seg.querySelectorAll('[role=tab]')];
+  const pick = tab => {
+    tabs.forEach(t => { const on = t === tab; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).classList.toggle('on', on); });
+    pill.style.width = tab.offsetWidth + 'px'; pill.style.transform = `translateX(${tab.offsetLeft}px)`;
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => pick(t));
+    t.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length]; pick(n); n.focus(); } });
+  });
+  const placePill = () => pick(tabs.find(t => t.getAttribute('aria-selected') === 'true'));
+  placePill(); addEventListener('resize', placePill);
+  if (document.fonts) document.fonts.ready.then(placePill);
+
+  /* interactive dot field */
+  const hero = document.querySelector('.hero'), cv = document.getElementById('field'), ctx = cv.getContext('2d');
+  let W, H, dots = [], mx = -999, my = -999, visible = true;
+  const GAP = 24;
+  function build() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dots = [];
+    for (let y = GAP / 2; y < H; y += GAP) for (let x = GAP / 2; x < W; x += GAP) dots.push({ x, y, ox: x, oy: y });
+    if (reduce) draw(0);
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    const R = 170;
+    for (const d of dots) {
+      const dx = d.ox - mx, dy = d.oy - my, dist = Math.sqrt(dx * dx + dy * dy);
+      const wave = Math.sin(d.ox * .012 + d.oy * .018 + t * .0009) * .5 + .5;
+      let k = 0;
+      if (dist < R) { k = 1 - dist / R; const push = k * k * 14; d.x += ((d.ox + dx / (dist || 1) * push) - d.x) * .2; d.y += ((d.oy + dy / (dist || 1) * push) - d.y) * .2; }
+      else { d.x += (d.ox - d.x) * .1; d.y += (d.oy - d.y) * .1; }
+      const a = .1 + wave * .16 + k * .7, r = .9 + wave * .5 + k * 1.9;
+      const c = k > 0 ? A : I;
+      ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${a.toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(d.x, d.y, r, 0, 6.2832); ctx.fill();
+    }
+  }
+  build(); addEventListener('resize', build);
+  if (!reduce) {
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(hero);
+    hero.addEventListener('pointermove', e => { const b = cv.getBoundingClientRect(); mx = e.clientX - b.left; my = e.clientY - b.top; });
+    hero.addEventListener('pointerleave', () => { mx = my = -999; });
+    (function loop(t) { if (visible) draw(t); requestAnimationFrame(loop); })(0);
+  }
+})();
+</script>
+</body>
+</html>
